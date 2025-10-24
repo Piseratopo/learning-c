@@ -75,6 +75,14 @@ int* llConvert(LLIST l, int* count) {
     return arr;
 }
 
+LLIST llConvertBack(int* arr, int count) {
+    LLIST l = NULL;
+    for (int i = count - 1; i >= 0; i--) {
+        l = llAdd(l, arr[i]);
+    }
+    return l;
+}
+
 // Calculate mean
 
 float llMeanIterative(LLIST l) {
@@ -141,24 +149,12 @@ int main() {
     printf("Mean (ForEach):   %.2f\n", llMeanForEach(list1));
 
     printf("\n--- Phase 2: Array Conversion ---\n");
-    int count = 0;
-    int* arr = llConvert(list1, &count);
-    if (arr) {
-        printf("Converted array: ");
-        for (int i = 0; i < count; i++) {
-            printf("%d ", arr[i]);
-        }
-        printf("\n");
-        free(arr);
-    }
-
-    printf("\n--- Phase 3: List Insertion ---\n");
-    LLIST list2 = NULL;
-    list2 = llAdd(list2, 98);
-    list2 = llAdd(list2, 99);
-    printf("Second list:\n");
+    int arr2[] = { 98, 99 };
+    int count2 = sizeof(arr2) / sizeof(arr2[0]);
+    LLIST list2 = llConvertBack(arr2, count2);
     llPrint(list2);
 
+    printf("\n--- Phase 3: List Insertion ---\n");
     printf("\nInserting second list after element '10' in the first list:\n");
     LIST_ELEM* p = llFind(list1, 10);
     if (p != NULL) {
