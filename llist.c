@@ -50,7 +50,7 @@ void llPrint(LLIST l) {
 
 // Convert from llist to array
 
-int* llConvert(LLIST l, int* count) {
+int* llConvertBack(LLIST l, int* count) {
     int size = 0;
     for (LIST_ELEM* c = l; c != NULL; c = c->next) {
         size++;
@@ -75,7 +75,7 @@ int* llConvert(LLIST l, int* count) {
     return arr;
 }
 
-LLIST llConvertBack(int* arr, int count) {
+LLIST llConvert(int* arr, int count) {
     LLIST l = NULL;
     for (int i = count - 1; i >= 0; i--) {
         l = llAdd(l, arr[i]);
@@ -151,7 +151,7 @@ int main() {
     printf("\n--- Phase 2: Array Conversion ---\n");
     int arr2[] = { 98, 99 };
     int count2 = sizeof(arr2) / sizeof(arr2[0]);
-    LLIST list2 = llConvertBack(arr2, count2);
+    LLIST list2 = llConvert(arr2, count2);
     llPrint(list2);
 
     printf("\n--- Phase 3: List Insertion ---\n");
