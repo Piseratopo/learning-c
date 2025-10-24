@@ -1,0 +1,19 @@
+Hàm getIntersectionNode(headA, headB):
+    Gán lA = headA
+    Gán lB = headB
+
+    # Dịch lA và lB sao cho chúng có chung độ dài
+    Tính độ dài của hai danh sách, trả về lenA và lenB
+
+    Nếu lenA > lenB:
+        Dịch lA tiến lên (lenA - lenB) bước
+    Ngược lại nếu lenB > lenA:
+        Dịch lB tiến lên (lenB - lenA) bước
+
+    # Truy duyệt mảng để tìm nút giao
+    Trong khi lA và lB chưa hết danh sách:
+        Nếu lA == lB:
+            Trả về lA (nút giao nhau)
+        Dịch lA và lB sang nút kế tiếp
+
+    Trả về NULL (không có nút giao nhau)
