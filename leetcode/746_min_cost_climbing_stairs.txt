@@ -1,0 +1,13 @@
+Mã giả:
+- Sử dụng hai biến để theo dõi chi phí tối thiểu từ vị trí hiện tại
+- Tại mỗi bước, tính chi phí tối thiểu để lên đỉnh từ bước đó
+- Làm việc từ cuối mảng ngược về đầu
+- Cuối cùng, trả về chi phí nhỏ hơn khi bắt đầu từ bậc 1 hoặc bậc 2
+
+Giải thích: 
+- Dễ thấy rằng, chi phí của một bậc i bằng:
+  chi phí [i] = min(chi phí [i-1], chi phí [i-2]).
+
+Cho nên, bắt đầu từ bậc cuối cùng, ta tính ngược về đầu. Vì từ cuối lên đỉnh thì chi phí chỉ là chính nó, nên dễ khởi tạo.
+
+- Để tiết kiệm bộ nhớ, ta chỉ lưu chi phí của hai bậc gần nhất.

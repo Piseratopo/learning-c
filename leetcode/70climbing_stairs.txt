@@ -1,0 +1,12 @@
+Mã giả:
+- Tạo mảng để lưu trữ kết quả đã tính
+- Xác định số cách cho những bước đầu tiên (n = 1, n = 2)
+- Cho i chạy từ 3 đến n:
+   mảng [i] = mảng [i-1] + mảng [i-2]
+- Trả về giá trị tương ứng với bậc n
+
+Giải thích:
+- Có thể lên bậc thứ i từ bậc thứ (i-1) hoặc (i-2), nên ta có thể tính số cách lên bậc thứ i bằng:
+  số cách lên bậc [i] = số cách lên bậc [i-1] + số cách lên bậc [i-2].
+
+Đây thực chất là tìm số Fibonacci thứ (n+1), với số Fibonacci thứ 1 = 1, số Fibonacci thứ 2 = 2.
