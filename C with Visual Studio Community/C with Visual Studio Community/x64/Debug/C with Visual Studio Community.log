@@ -1,0 +1,5 @@
+﻿  main.c
+D:\Programming\Learnings\learning-c\C with Visual Studio Community\C with Visual Studio Community\main.c(6,13): error C2065: 'nullptr': undeclared identifier
+D:\Programming\Learnings\learning-c\C with Visual Studio Community\C with Visual Studio Community\main.c(7,13): error C2065: 'nullptr': undeclared identifier
+D:\Programming\Learnings\learning-c\C with Visual Studio Community\C with Visual Studio Community\main.c(7,10): warning C4047: '==': 'int *' differs in levels of indirection from 'int'
+D:\Programming\Learnings\learning-c\C with Visual Studio Community\C with Visual Studio Community\main.c(6,7): warning C4047: 'initializing': 'int *' differs in levels of indirection from 'int'
