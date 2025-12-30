@@ -46,10 +46,10 @@ void grade_program(const string& program_file, const string& input_file = "input
                const string& expected_output_file = "output.txt") {
    // Determine compiler based on file extension
    string compiler;
-   if (program_file.find(".c") != string::npos) {
-      compiler = "gcc";
-   } else if (program_file.find(".cpp") != string::npos) {
+   if (program_file.find(".cpp") != string::npos) {
       compiler = "g++";
+   } else if (program_file.find(".c") != string::npos) {
+      compiler = "gcc";
    } else {
       cout << "Unsupported file type. Please provide a .c or .cpp file." << endl;
       return;
