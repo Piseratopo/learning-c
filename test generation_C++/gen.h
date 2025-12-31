@@ -11,4 +11,9 @@ std::string generate_random_string(
    const std::string& allowed_chars = ""
 );
 
+int generate_random_integer (
+   int lower_bound,
+   int upper_bound
+);
+
 #endif // GEN_H

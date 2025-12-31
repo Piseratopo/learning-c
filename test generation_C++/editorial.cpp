@@ -1,34 +1,17 @@
-// #include <stdio.h>
-
-// int main() {
-//    char s[1010];
-//    scanf("%[^\n]", s);
-//    printf("\"%s\"", s);
-//    return 0;
-// }
-
-// #include <stdio.h>
-// #include <string.h>
-
-// int main() {
-//    char s[1010];
-//    fgets(s, sizeof(s), stdin);
-//    size_t len = strlen(s);
-//    if (len > 0 && s[len - 1] == '\n') {
-//       s[len - 1] = '\0';
-//    }
-//    printf("\"%s\"", s);
-//    return 0;
-// }
-
-#include <iostream>
-#include <string>
+#include <stdio.h>
+#include <stdlib.h>
 
 int main() {
-   std::string s;
-   std::getline(std::cin, s);
+   int N;
+   scanf("%d", &N);
 
-   std::cout << "\"" << s << "\"";
-
+   int last_digit = N % 10;
+   int prefix_N = N / 10;
+   int pos;
+   for (pos = 1; pos > prefix_N; pos *= 10);
+   
+   int diff = abs(last_digit * pos + prefix_N - N);
+   printf("%d", diff);
+   
    return 0;
 }

@@ -54,3 +54,14 @@ std::string generate_random_string(
    
    return result;
 }
+
+int generate_random_integer (
+   int lower_bound,
+   int upper_bound
+) {
+   std::random_device rd;
+   std::mt19937 gen(rd());
+   std::uniform_int_distribution<> dis(lower_bound, upper_bound);
+
+   return dis(gen);
+}
