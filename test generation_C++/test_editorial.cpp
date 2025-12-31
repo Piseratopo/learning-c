@@ -55,7 +55,7 @@ void grade_program(const string& program_file, const string& input_file = "input
       return;
    }
    
-   string executable = "editorial.exe";
+   string executable = "editorial";
    
    // Step 1: Compile the program
    string compile_cmd = compiler + " " + program_file + " -o " + executable;
@@ -69,7 +69,7 @@ void grade_program(const string& program_file, const string& input_file = "input
    cout << "Compilation successful." << endl;
    
    // Step 2: Run the program with input.txt
-   string run_cmd = ".\\" + executable + " < " + input_file + " > program_output.txt";
+   string run_cmd = "./" + executable + " < " + input_file + " > program_output.txt";
    cout << "Running: " << run_cmd << endl;
    
    int run_result = system(run_cmd.c_str());

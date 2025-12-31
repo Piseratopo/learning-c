@@ -1,7 +1,7 @@
 import random
 
 # Step 1: Generate a random number N
-N = random.randint(10, 999999)  # ensure at least 2 digits
+N = random.randint(100000000, 999999999)  # ensure at least 2 digits
 
 # Step 2: Write N to input.txt
 with open("input.txt", "w") as f:

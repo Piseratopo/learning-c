@@ -1,6 +1,16 @@
 # Makefile
-CXX = g++
+ifeq ($(OS),Windows_NT)
+	CXX = g++
+	CLEAN_CMD = del /f /q
+	MKDIR = if not exist Object mkdir Object
+else
+	CXX = clang++
+	CLEAN_CMD = rm -f
+	MKDIR = mkdir -p Object
+endif
+
 CXXFLAGS = -Wall -Wextra
+OBJDIR = Object
 
 # Default target
 all: test_editorial random_string
@@ -24,7 +34,7 @@ gen.o: gen.cpp gen.h
 
 # Clean up
 clean:
-	del /f /q *.o *.exe input.txt output.txt program_output.txt 2>nul
+	$(CLEAN_CMD) *.o *.exe input.txt output.txt program_output.txt 
 
 # Phony targets
 .PHONY: all clean
