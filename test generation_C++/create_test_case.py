@@ -1,22 +1,18 @@
 import random
 
-# Step 1: Generate a random number N
-N = random.randint(100000000, 999999999)  # ensure at least 2 digits
+T = 200000
 
-# Step 2: Write N to input.txt
+input_text = str(T) + "\n"
+output_text = ""
+    
+for t in range(T):
+    a = random.randint(100000000, 999999999)
+    input_text += str(a) + "\n"
+    output_text += "Y" if a % 11 == 0 else "N"
+    output_text += "\n"
+    
+
 with open("input.txt", "w") as f:
-    f.write(str(N))
-
-# Step 3: Create M by moving the last digit of N to the front
-N_str = str(N)
-M_str = N_str[-1] + N_str[:-1]
-M = int(M_str)
-
-# Step 4: Find the positive difference between N and M
-difference = abs(N - M)
-
-# Step 5: Write the difference to output.txt
+    f.write(input_text)
 with open("output.txt", "w") as f:
-    f.write(str(difference))
-
-print(f"N = {N}, M = {M}, |N - M| = {difference}")
+    f.write(output_text)
