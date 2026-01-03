@@ -1,14 +1,22 @@
-#include <iostream>
-#include <string>
+#include <stdio.h>
+#include <string.h>
 
 int main() {
-   std::string input;
-
-   // Read a line of UTF-8 text from the terminal
-   std::getline(std::cin, input);
-
-   // Print it back in quotation marks
-   std::cout << "\"" << input << "\"" << std::endl;
+   int T;
+   scanf("%d", &T);
+   for(int i = 0; i < T; i++) {
+      char N[100010];
+      scanf(" %s ", N);
+      int remainder = 0;
+      for(int j = 0; j < strlen(N); j++) {
+         remainder = (remainder * 10 + (N[j] - '0')) % 11;
+      }
+      if(remainder == 0) {
+         printf("C\n");
+      } else {
+         printf("K\n");
+      }
+   }
 
    return 0;
 }
