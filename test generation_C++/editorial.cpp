@@ -1,21 +1,28 @@
 #include <stdio.h>
-#include <string.h>
+#include <math.h>
+
+void printNoSolution() {
+   printf(
+      "V\u00F4 nghi\u1EC7m"
+   );
+}
 
 int main() {
    int T;
    scanf("%d", &T);
    for(int i = 0; i < T; i++) {
-      char N[100010];
-      scanf(" %s ", N);
-      int remainder = 0;
-      for(int j = 0; j < strlen(N); j++) {
-         remainder = (remainder * 10 + (N[j] - '0')) % 11;
+      double a, b, c;
+      scanf("%lf %lf %lf", &a, &b, &c);
+      double x, y, z;
+      if (fabs(a - b) < 10e-6 || fabs(c + 1) < 10e-6) {
+         printNoSolution();
+         printf("\n");
+         continue;
       }
-      if(remainder == 0) {
-         printf("C\n");
-      } else {
-         printf("K\n");
-      }
+      x = (a - b) / (c + 1.0);
+      y = a - x;
+      z = c * x;
+      printf("%f %f %f\n", x, y, z);
    }
 
    return 0;

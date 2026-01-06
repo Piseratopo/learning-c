@@ -10,6 +10,35 @@
 using namespace std;
 namespace fs = std::filesystem;
 
+bool compareSimilarLines(const string& line1, const string& line2) {
+   return line1 == line2;
+}
+
+bool compareNumbersOnLines(const string& line1, const string &line2, double threshold) {
+   vector<string> numbers1, numbers2;
+   istringstream iss1(line1), iss2(line2);
+   string number;
+   while (getline(iss1, number, ' ')) numbers1.push_back(number);
+   while (getline(iss2, number, ' ')) numbers2.push_back(number);
+
+   if (numbers1.size() != numbers2.size()) return false;
+
+   for (int i = 0; i < numbers1.size(); ++i) {
+      double a = stod(numbers1[i]), b = stod(numbers2[i]);
+      if (abs(a - b) > threshold) return false;
+   }
+   
+   return true;
+}
+
+bool customCompare(const string& line1, const string& line2) {
+   try {
+      return compareSimilarLines(line1, line2) || compareNumbersOnLines(line1, line2, 0.01);
+   } catch (const std::exception& e) {
+      return false;
+   }
+}
+
 bool compareFiles(const string& file1, const string& file2) {
    ifstream f1(file1);
    ifstream f2(file2);
@@ -20,13 +49,15 @@ bool compareFiles(const string& file1, const string& file2) {
 
    string line1, line2;
    while (getline(f1, line1) && getline(f2, line2)) {
-      if (line1 != line2) {
+      if (!customCompare(line1, line2)) {
+         cout << "Line mismatch: " << line1 << " vs " << line2 << endl;
          return false;
       }
    }
 
    // Check if one file has more lines than the other
    if (getline(f1, line1) || getline(f2, line2)) {
+      cout << "File length mismatch" << endl;
       return false;
    }
 
@@ -96,13 +127,6 @@ void grade_program(const string& program_file, const string& input_file = "input
       cout << "ACCEPTED: Output matches expected output." << endl;
    } else {
       cout << "WRONG ANSWER: Output does not match expected output." << endl;
-
-      // Show differences
-      cout << "\n--- Program Output ---" << endl;
-      printFileContents("program_output.txt");
-
-      cout << "\n--- Expected Output ---" << endl;
-      printFileContents(expected_output_file);
    }
 }
 

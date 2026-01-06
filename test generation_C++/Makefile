@@ -36,10 +36,10 @@ $(OBJDIR):
 # Clean up
 clean:
 ifeq ($(OS),Windows_NT)
-	$(CLEAN_CMD) Objects\*.o *.exe input.txt output.txt program_output.txt
+	$(CLEAN_CMD) Objects\*.o *.exe program_output.txt
 	if exist Objects rmdir Objects
 else
-	$(CLEAN_CMD) Objects/*.o *.exe input.txt output.txt program_output.txt
+	$(CLEAN_CMD) Objects/*.o *.exe program_output.txt
 	rm -rf Objects
 endif 
 
