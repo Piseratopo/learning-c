@@ -1,5 +1,6 @@
 #include <chrono>
 #include <cstdlib>
+#include <cmath>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -10,47 +11,32 @@
 using namespace std;
 namespace fs = std::filesystem;
 
-bool compareSimilarLines(const string& line1, const string& line2) {
-   return line1 == line2;
-}
+bool compareFiles(const string& program_output, const string& output, const string& input) {
+   ifstream f1(program_output);
+   ifstream f2(output);
+   ifstream fi(input);
 
-bool compareNumbersOnLines(const string& line1, const string &line2, double threshold) {
-   vector<string> numbers1, numbers2;
-   istringstream iss1(line1), iss2(line2);
-   string number;
-   while (getline(iss1, number, ' ')) numbers1.push_back(number);
-   while (getline(iss2, number, ' ')) numbers2.push_back(number);
-
-   if (numbers1.size() != numbers2.size()) return false;
-
-   for (int i = 0; i < numbers1.size(); ++i) {
-      double a = stod(numbers1[i]), b = stod(numbers2[i]);
-      if (abs(a - b) > threshold) return false;
-   }
-   
-   return true;
-}
-
-bool customCompare(const string& line1, const string& line2) {
-   try {
-      return compareSimilarLines(line1, line2) || compareNumbersOnLines(line1, line2, 0.01);
-   } catch (const std::exception& e) {
-      return false;
-   }
-}
-
-bool compareFiles(const string& file1, const string& file2) {
-   ifstream f1(file1);
-   ifstream f2(file2);
-
-   if (!f1.is_open() || !f2.is_open()) {
+   if (!f1.is_open() || !f2.is_open() || !fi.is_open()) {
       return false;
    }
 
-   string line1, line2;
-   while (getline(f1, line1) && getline(f2, line2)) {
-      if (!customCompare(line1, line2)) {
-         cout << "Line mismatch: " << line1 << " vs " << line2 << endl;
+   string line1, line2, line_i;
+   getline(fi, line_i);
+   while (getline(f1, line1) && getline(f2, line2) && getline(fi, line_i)) {
+      if (line1 == line2) {
+         continue;
+      }
+      stringstream ss1(line1);
+      double x, y, z;
+      ss1 >> x >> y >> z;
+
+      stringstream ssi(line_i);
+      double a, b, c;
+      ssi >> a >> b >> c;
+      if (fabs(x + y - a) > 10e-2 || fabs(y - z - b) > 10e-2 || fabs(z / x - c) > 10e-2) {
+         cout << "WRONG ANSWER: Error more than threshold.";
+         cout << "Input: " << line_i << endl;
+         cout << "Output: " << line1 << endl;
          return false;
       }
    }
@@ -74,8 +60,11 @@ void printFileContents(const string& filename) {
    }
 }
 
-void grade_program(const string& program_file, const string& input_file = "input.txt",
-                   const string& expected_output_file = "output.txt") {
+void grade_program(
+   const string& program_file,
+   const string& input_file = "input.txt",
+   const string& expected_output_file = "output.txt"
+) {
    // Determine compiler based on file extension
    string compiler;
    if (program_file.find(".cpp") != string::npos) {
@@ -122,8 +111,10 @@ void grade_program(const string& program_file, const string& input_file = "input
    }
    cout << "Execution successful. Time taken: " << run_time.count() << " seconds." << endl;
 
+   
+
    // Step 3: Compare output with expected output
-   if (compareFiles("program_output.txt", expected_output_file)) {
+   if (compareFiles("program_output.txt", expected_output_file, input_file)) {
       cout << "ACCEPTED: Output matches expected output." << endl;
    } else {
       cout << "WRONG ANSWER: Output does not match expected output." << endl;

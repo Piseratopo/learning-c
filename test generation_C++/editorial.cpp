@@ -14,16 +14,19 @@ int main() {
       double a, b, c;
       scanf("%lf %lf %lf", &a, &b, &c);
       double x, y, z;
-      if (fabs(a - b) < 10e-6 || fabs(c + 1) < 10e-6) {
+      if (fabs(a - b) < 10e-6 && fabs(c + 1) < 10e-6) {
+         x = 1.0f;
+         y = a - x;
+         z = x * c;
+         printf("%f %f %f\n", x, y, z);
+      } else if (fabs(a - b) < 10e-6 || fabs(c + 1) < 10e-6) {
          printNoSolution();
          printf("\n");
-         continue;
+      } else {
+         x = (a - b) / (c + 1.0);
+         y = a - x;
+         z = c * x;
+         printf("%f %f %f\n", x, y, z);
       }
-      x = (a - b) / (c + 1.0);
-      y = a - x;
-      z = c * x;
-      printf("%f %f %f\n", x, y, z);
-   }
-
-   return 0;
+    }
 }

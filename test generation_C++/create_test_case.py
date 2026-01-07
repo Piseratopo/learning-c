@@ -8,34 +8,38 @@ output_text = ""
 
 for t in range(T):
     # print(t)
-    choice = random.randint(0, 10)
+    choice = random.randint(0, 1)
     if choice == 0:
-        a = Decimal(random.randint(-50000, 50000)) / Decimal(100)
+        a = Decimal(random.randint(-100000, 100000)) / Decimal(100)
         b = a
-        c = Decimal(random.randint(-50000, 50000)) / Decimal(100)
+        c = Decimal(random.randint(-1000, 1000)) / Decimal(100)
         input_text += f"{a} {b} {c}\n"
         output_text += f"Vô nghiệm\n"
     elif choice == 1:
-        a = Decimal(random.randint(-50000, 50000)) / Decimal(100)
-        b = Decimal(random.randint(-50000, 50000)) / Decimal(100)
+        a = Decimal(random.randint(-100000, 100000)) / Decimal(100)
+        b = Decimal(random.randint(-100000, 100000)) / Decimal(100)
+        if a == b:
+            b += Decimal(1)
         c = -1
         input_text += f"{a} {b} {c}\n"
         output_text += f"Vô nghiệm\n"
-    else:
-        x = Decimal(random.randint(-50000, 50000)) / Decimal(100)
-        y = Decimal(random.randint(-50000, 50000)) / Decimal(100)
-        z = Decimal(random.randint(-50000, 50000)) / Decimal(100)
-
-        a = x + y
-        b = y - z
-        c = Decimal(round(z / x, 4))
-
-        x = (a - b) / (c + Decimal("1.0"))
-        y = (a * c + b) / (c + Decimal("1.0"))
-        z = (a - b) * c / (c + Decimal("1.0"))
-
+    elif choice == 2:
+        a = Decimal(random.randint(-100000, 100000)) / Decimal(100)
+        b = a
+        c = -1
         input_text += f"{a} {b} {c}\n"
-        output_text += f"{x} {y} {z}\n"
+        output_text += "_\n"
+    else:
+        a = Decimal(random.randint(-100000, 100000)) / Decimal(100)
+        b = Decimal(random.randint(-100000, 100000)) / Decimal(100)
+        if a == b:
+            b += 1
+        c = -100
+        while c == -100:
+            c = Decimal(random.randint(-1000, 1000))
+        c = c / Decimal(100)
+        input_text += f"{a} {b} {c}\n"
+        output_text += "_\n"
 
 with open("input.txt", "w", encoding="utf-8") as f:
     f.write(input_text)

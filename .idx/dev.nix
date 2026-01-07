@@ -8,7 +8,7 @@
     pkgs.gcc
     pkgs.gdb
     pkgs.clang
-    # pkgs.go
+    pkgs.gnumake
     pkgs.python3Full
     # pkgs.python311Packages.pip
     # pkgs.nodejs_20
