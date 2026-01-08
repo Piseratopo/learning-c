@@ -7,9 +7,48 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 namespace fs = std::filesystem;
+
+// === Header of file ===
+
+bool customCompareLines(const string& line_program_output, const string& line_output, const string& line_input) {
+   string line_program_output_lower = line_program_output;
+   transform(line_program_output_lower.begin(), line_program_output_lower.end(), line_program_output_lower.begin(), ::tolower);
+   stringstream ss1(line_program_output_lower);
+   string line_output_lower = line_output;
+   transform(line_output_lower.begin(), line_output_lower.end(), line_output_lower.begin(), ::tolower);
+   stringstream ss2(line_output_lower);
+   double a_po_base, b_po_base, c_po_base, d_po_base;
+   int a_po_exp, b_po_exp, c_po_exp, d_po_exp;
+   scanf("%lfe%d %lfe%d %lfe%d %lfe%d", &a_po_base, &a_po_exp, &b_po_base, &b_po_exp, &c_po_base, &c_po_exp, &d_po_base, &d_po_exp);
+   double a_o_base, b_o_base, c_o_base, d_o_base;
+   int a_o_exp, b_o_exp, c_o_exp, d_o_exp;
+   scanf("%lfe%d %lfe%d %lfe%d %lfe%d", &a_o_base, &a_o_exp, &b_o_base, &b_o_exp, &c_o_base, &c_o_exp, &d_o_base, &d_o_exp);
+
+   // Compare number by number
+
+   if (
+      a_po_base != a_o_base ||
+      b_po_base != b_o_base ||
+      c_po_base != c_o_base ||
+      d_po_base != d_o_base ||
+      a_po_exp != a_o_exp ||
+      b_po_exp != b_o_exp ||
+      c_po_exp != c_o_exp ||
+      d_po_exp != d_o_exp 
+   ) {
+      printf("WRONG ANSWER: Error more than threshold.");
+      printf("Input: %s\n", line_input.c_str());
+      printf("Output: %s\n", line_program_output.c_str());
+      return false;
+   }
+   return true;
+}
+
+// === Footer of file ===
 
 bool compareFiles(const string& program_output, const string& output, const string& input) {
    ifstream f1(program_output);
@@ -20,29 +59,15 @@ bool compareFiles(const string& program_output, const string& output, const stri
       return false;
    }
 
-   string line1, line2, line_i;
-   getline(fi, line_i);
-   while (getline(f1, line1) && getline(f2, line2) && getline(fi, line_i)) {
-      if (line1 == line2) {
-         continue;
-      }
-      stringstream ss1(line1);
-      double x, y, z;
-      ss1 >> x >> y >> z;
-
-      stringstream ssi(line_i);
-      double a, b, c;
-      ssi >> a >> b >> c;
-      if (fabs(x + y - a) > 10e-2 || fabs(y - z - b) > 10e-2 || fabs(z / x - c) > 10e-2) {
-         cout << "WRONG ANSWER: Error more than threshold.";
-         cout << "Input: " << line_i << endl;
-         cout << "Output: " << line1 << endl;
+   string line_program_output, line_output, line_input;
+   getline(fi, line_input);
+   while (getline(f1, line_program_output) && getline(f2, line_output) && getline(fi, line_input)) {
+      if (!customCompareLines(line_program_output, line_output, line_input)) {
          return false;
       }
    }
 
-   // Check if one file has more lines than the other
-   if (getline(f1, line1) || getline(f2, line2)) {
+   if (getline(f1, line_program_output) || getline(f2, line_output)) {
       cout << "File length mismatch" << endl;
       return false;
    }
@@ -115,9 +140,9 @@ void grade_program(
 
    // Step 3: Compare output with expected output
    if (compareFiles("program_output.txt", expected_output_file, input_file)) {
-      cout << "ACCEPTED: Output matches expected output." << endl;
+      cout << "ACCEPTED" << endl;
    } else {
-      cout << "WRONG ANSWER: Output does not match expected output." << endl;
+      cout << "WRONG ANSWER" << endl;
    }
 }
 

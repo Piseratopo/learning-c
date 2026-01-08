@@ -1,33 +1,26 @@
 # Makefile
 ifeq ($(OS),Windows_NT)
-	CXX = g++
+	CC = gcc
 	CLEAN_CMD = del /f /q
 	MKDIR = if not exist Objects mkdir Objects
 else
-	CXX = clang++
+	CC = clang
 	CLEAN_CMD = rm -f
 	MKDIR = mkdir -p Objects
 endif
 
-CXXFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -std=c99
 OBJDIR = Objects
 
 # Default target
-all: test_editorial test_generation
+all: test_editorial
 
 # Test editor program
 test_editorial: $(OBJDIR)/test_editorial.o
-	$(CXX) $(CXXFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^
 
-$(OBJDIR)/test_editorial.o: test_editorial.cpp | $(OBJDIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-# Test generation program
-test_generation: $(OBJDIR)/test_generation.o
-	$(CXX) $(CXXFLAGS) -o $@ $^
-
-$(OBJDIR)/test_generation.o: test_generation.cpp | $(OBJDIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+$(OBJDIR)/test_editorial.o: test_editorial.c | $(OBJDIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 # Create Objects directory
 $(OBJDIR):
