@@ -16,37 +16,43 @@ def compare_file(input_f, output_f, expected_f):
       print("Incorrect line count.")
       return False
    
-   outputs = []
-   expecteds = []
-   
    for i in range(len(output_lines)):
-      output_l = output_lines[i].strip()
-      expected_l = expected_lines[i].strip()
+      output = output_lines[i].strip().split()
+      if len(output) != 4:
+         print(f"Line {i+1}: Output value '{item}' should have 4 values.")
+         return False
 
-      output = output_l.split()
       parsed_output = []
       for item in output:
          match = re.match(r'^(-?\d+\.?\d*)[eE]([+-]?\d+)$', item)
          if match:
-            a = match.group(1)
+            a = float(match.group(1))
             b = int(match.group(2))
             parsed_output.append((a, b))
          else:
             print(f"Line {i+1}: Output value '{item}' is not in the expected scientific notation format.")
             return False
-      
-      outputs.append(parsed_output)
 
-      expected = expected_l.split()
-      parse_expected = []
+      expected = expected_lines[i].strip() .split()
+      parsed_expected = []
       for item in expected:
          match = re.match(r'^(-?\d+\.?\d*)[eE]([+-]?\d+)$', item)
-         a = match.group(1)
+         a = float(match.group(1))
          b = int(match.group(2))
-         parse_expected.append((a, b))
+         parsed_expected.append((a, b))
       
-   print(parse_output, gfd`parse_expected)
+      for j in range(len(parsed_output)):
+         out_base, out_exp = parsed_output[j]
+         exp_base, exp_exp = parsed_expected[j]
+
+         first_check = abs(out_base - exp_base) > 1e-3 or out_exp != exp_exp
+         second_check = abs(out_base * 10 - exp_base) > 1e-3 or out_exp - 1 != exp_exp
+         third_check = abs(out_base / 10 - exp_base) > 1e-3 or out_exp + 1 != exp_exp
+         if first_check and second_check and third_check:
+            print(f"Line {i+1}: Input value '{input_lines[i].strip()}' does not match with the expected value '{expected_lines[i].strip()}': Output value '{output_lines[i].strip()}'.")
+            return False
    return True
+      
 
 def grade_program(program_file, input_file="input.txt", expected_output_file="output.txt"):
    # Determine compiler based on file extension
@@ -79,7 +85,7 @@ def grade_program(program_file, input_file="input.txt", expected_output_file="ou
    
    # Step 3: Compare output with expected output
    if compare_file(input_file, "program_output.txt", expected_output_file):
-       print("Test passed (format check only)!")
+       print("All test passed!")
    else:
        print("Test failed.")
   

@@ -10,6 +10,6 @@ int main() {
       double subtrahrezulto = X - Y;
       double obligrezulto = X * Y;
       double dividrezulto = X / Y;
-      printf("%.3e %.3e %.3e %.3e\n", sumigrezulto, subtrahrezulto, obligrezulto, dividrezulto);
+      printf("%e %e %e %e\n", sumigrezulto, subtrahrezulto, obligrezulto, dividrezulto);
    }
 }
