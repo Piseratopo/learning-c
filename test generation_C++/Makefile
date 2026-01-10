@@ -9,18 +9,8 @@ else
 	MKDIR = mkdir -p Objects
 endif
 
-CFLAGS = -Wall -Wextra -std=c99
+CFLAGS = -Wall -Wextra -std=c2x
 OBJDIR = Objects
-
-# Default target
-all: test_editorial
-
-# Test editor program
-test_editorial: $(OBJDIR)/test_editorial.o
-	$(CC) $(CFLAGS) -o $@ $^
-
-$(OBJDIR)/test_editorial.o: test_editorial.c | $(OBJDIR)
-	$(CC) $(CFLAGS) -c $< -o $@
 
 # Create Objects directory
 $(OBJDIR):
@@ -37,4 +27,4 @@ else
 endif 
 
 # Phony targets
-.PHONY: all clean $(OBJDIR)
+.PHONY: clean $(OBJDIR)

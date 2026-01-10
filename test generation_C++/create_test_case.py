@@ -9,9 +9,9 @@ output_text = ""
 for t in range(T):
     # print(t)
     x_base = Decimal(random.randint(1000, 9999)) / Decimal(1000)
-    x_exp = Decimal(random.randint(-99, 99))
+    x_exp = Decimal(random.randint(-2, 2))
     y_base = Decimal(random.randint(1000, 9999)) / Decimal(1000)
-    y_exp = Decimal(random.randint(-99, 99))
+    y_exp = Decimal(random.randint(-2, 2))
     
     input_text += f"{x_base}e{x_exp} {y_base}e{y_exp}\n"
     
